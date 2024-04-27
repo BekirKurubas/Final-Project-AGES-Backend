@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mysql-employee:
+    container_name: mysql-employee
+    image: mysql
+    ports:
+      - 23306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_USER=employee
+      - MYSQL_DATABASE=employee
+    volumes:
+      - ./mysqlDB:/var/lib/meinsql/data
+  phpmyadmin-hicoders:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-employee
+    depends_on:
+      - mysql-employee
+    environment:
+      PMA_HOST: mysql-employee
+    restart: always
+    ports:
+      - 28080:80
