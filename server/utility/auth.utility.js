@@ -5,8 +5,6 @@ import logger from "../config/log.config.js";
 
 const verifyToken = (req, res, next) => {
 
-    return next()
-
     let token = req.session.token;
 
     if (!token) {
