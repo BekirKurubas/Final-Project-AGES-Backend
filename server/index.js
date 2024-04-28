@@ -1,5 +1,4 @@
 import './loadEnv.js';
-
 import express from 'express';
 import cors from 'cors';
 import cookieSession from 'cookie-session';

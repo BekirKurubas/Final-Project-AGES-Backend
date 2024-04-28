@@ -45,7 +45,7 @@ router.get('/:id/download', verifyToken, async (req, res) => {
 // Upload
 router.post('/', verifyToken, upload.single('file'), async (req, res) => {
     const file = req.file;
-    const employeeId = req.query.employeeId;
+    const employeeId = req.query.employeeId;    
     try{
         logger.info(`Find employee by id ${employeeId}...`);
         const employee = await Employee.findByPk(employeeId);
