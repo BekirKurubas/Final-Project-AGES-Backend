@@ -1,14 +1,16 @@
 import sequelize from "../config/database.config.js";
-import { DataTypes } from "sequelize";
+import Sequelize, { DataTypes } from "sequelize";
 
 const User = sequelize.define("User", {
-    firstname: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        notEmpty: {
-            msg: 'First Name is required'
-        },
-    },
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
     lastname: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -30,9 +32,12 @@ const User = sequelize.define("User", {
             msg: 'Password is required'
         },
     },
+    role: {
+        type: DataTypes.ENUM("admin", "user"),
+        allowNull: false
+      },
 },{
     tableName: 'user'
 });
-
 
 export {User}
