@@ -1,31 +1,26 @@
 import sequelize from "../config/database.config.js";
-import Sequelize, { DataTypes } from "sequelize";
+import Sequelize from "sequelize";
 
-const User = sequelize.define("User", {
+const Exam = sequelize.define("Exam", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
-      // TODO get auth0 Id from auth token
-    // user: { 
-    //     type: Sequelize.STRING, 
-    //     allowNull: false
-    //   },
-    started: {
-        type: DataTypes.Date,
-        allowNull: false,
     },
-    // TODO store answers
-    // answers: { 
-    //     type: DataTypes.STRING,
-    //     allowNull: true,
-    //     isEmail: {
-    //         msg: 'Email is required'
-    //     },
-    // },
-},{
-    tableName: 'user'
+    user: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    endTime: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    finished: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    }
+}, {
+    tableName: 'exam',
 });
 
-export {Exam}
+export default Exam;
