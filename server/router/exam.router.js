@@ -4,6 +4,7 @@ import Exam from '../model/exam.model.js';
 import Answer from '../model/answer.model.js';
 import Page from '../model/page.model.js';
 import { Op } from "sequelize";
+import { formatResultsWithCorrectAnswers } from '../service/result.helper.js';
 
 
 
@@ -51,10 +52,10 @@ examRouter.post('/:id/page/', async (req, res) => {
             return;
         }
 
-        if (exam.finished || exam.endTime < new Date()) {
-            res.status(400).send({ msg: "Exam is already finished." });
-            return;
-        }
+        // if (exam.finished || exam.endTime < new Date()) {
+        //     res.status(400).send({ msg: "Exam is already finished." });
+        //     return;
+        // }
         const existingPage = await Page.findOne({ where: { ExamId: examId, pageNumber: pageCreate.pageNumber } })
         if (!existingPage) {
             console.log("create new page and answers")
@@ -108,7 +109,8 @@ examRouter.post('/:examId/finish', async (req, res) => {
     console.log("finish exam");
     try {
         const authId = req.auth.payload.sub;
-        const examId = req.params.id;
+        const examId = req.params.examId;
+        console.log
         const exam = await Exam.findOne({ where: { id: examId, user: authId } });
         if (!exam) {
             res.status(400).send({ msg: "No exam with this id for this user." });
@@ -122,6 +124,26 @@ examRouter.post('/:examId/finish', async (req, res) => {
         console.log(e)
     }
 });
+
+// get results
+examRouter.get('/:examId/results', async (req, res) => {
+    console.log("get results");
+    try {
+        const authId = req.auth.payload.sub;
+        const examId = req.params.examId;
+        const exam = await Exam.findOne({ where: { id: examId, user: authId } });
+        if (!exam) {
+            res.status(400).send({ msg: "No exam with this id for this user." });
+            return;
+        } else {
+            const pagesWithAnswers = await Page.findAll({ where: { ExamId: examId }, include: { model: Answer, as: 'answers' } })
+            const resultsWithCorrectAnswers = formatResultsWithCorrectAnswers(pagesWithAnswers);
+            res.status(200).send({ resultsWithCorrectAnswers })
+        }
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 export { examRouter };
 
-// TODO audience not found but exists 

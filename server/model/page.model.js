@@ -12,14 +12,6 @@ const Page = sequelize.define("Page", {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    // examId: {
-    //     type: Sequelize.INTEGER,
-    //     allowNull: false,
-    //     references: {
-    //         model: Exam,
-    //         key: "id"
-    //     }
-    // },
 }, {
     tableName: 'page'
 });
