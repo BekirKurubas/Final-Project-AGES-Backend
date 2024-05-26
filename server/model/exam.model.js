@@ -11,6 +11,10 @@ const Exam = sequelize.define("Exam", {
         type: Sequelize.STRING,
         allowNull: false
     },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     endTime: {
         type: Sequelize.DATE,
         allowNull: false

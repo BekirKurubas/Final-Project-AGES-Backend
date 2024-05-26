@@ -18,10 +18,10 @@ examRouter.use(auth({
 
 // start exam
 examRouter.post('/', async (req, res) => {
-    console.log("authenticated call")
     try {
         const now = new Date()
         const authId = req.auth.payload.sub; // The decoded JWT payload.
+        const email = req.auth.payload.user_email
         const runningExams = await Exam.findAll({ where: { user: authId, finished: false, endTime: { [Op.gt]: now } } });
         if (!!runningExams.length) {
             res.status(400).send({ msg: "User has already a running exam" });
@@ -30,6 +30,7 @@ examRouter.post('/', async (req, res) => {
         const ninetyMinutesInMilliseconds = 90 * 60 * 1000;
         const exam = await Exam.create({
             user: authId,
+            email: email,
             endTime: new Date(now.getTime() + ninetyMinutesInMilliseconds)
         })
         res.send(exam);
@@ -110,7 +111,6 @@ examRouter.post('/:examId/finish', async (req, res) => {
     try {
         const authId = req.auth.payload.sub;
         const examId = req.params.examId;
-        console.log
         const exam = await Exam.findOne({ where: { id: examId, user: authId } });
         if (!exam) {
             res.status(400).send({ msg: "No exam with this id for this user." });
@@ -130,6 +130,7 @@ examRouter.get('/:examId/results', async (req, res) => {
     console.log("get results");
     try {
         const authId = req.auth.payload.sub;
+        console.log(req.auth)
         const examId = req.params.examId;
         const exam = await Exam.findOne({ where: { id: examId, user: authId } });
         if (!exam) {
