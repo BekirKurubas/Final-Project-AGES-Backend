@@ -138,6 +138,10 @@ examRouter.get('/:examId/results', async (req, res) => {
             return;
         } else {
             const pagesWithAnswers = await Page.findAll({ where: { ExamId: examId }, include: { model: Answer, as: 'answers' } })
+            if (pagesWithAnswers.length === 0) {
+                res.status(400).send({ msg: "No pages with found for this exam." });
+                return;
+            }
             const resultsWithCorrectAnswers = formatResultsWithCorrectAnswers(pagesWithAnswers);
             res.status(200).send({ resultsWithCorrectAnswers })
         }
