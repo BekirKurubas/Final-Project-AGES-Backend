@@ -151,4 +151,3 @@ examRouter.get('/:examId/results', async (req, res) => {
 });
 
 export { examRouter };
-
