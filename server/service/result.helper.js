@@ -151,7 +151,7 @@ export function formatResultsWithCorrectAnswers(pagesWithAnswers) {
         let correctAnswers = 0;
         // iterrate trough answers
         for (let j = 0; j < 10; j++) {
-            if (i <= 2 && j === 5) {
+            if (i < 2 && j === 5) {
                 break;
             }
             results[i].questions[j].answer = pagesWithAnswers[i].answers[j].answer;
