@@ -49,14 +49,16 @@ examRouter.post('/:id/page/', async (req, res) => {
         const pageCreate = req.body;
         const exam = await Exam.findOne({ where: { id: examId, user: authId } });
         if (!exam) {
+            console.log("hmm failed here")
             res.status(400).send({ msg: "No exam with this id for this user." });
             return;
         }
 
-        // if (exam.finished || exam.endTime < new Date()) {
-        //     res.status(400).send({ msg: "Exam is already finished." });
-        //     return;
-        // }
+        if (exam.finished || exam.endTime < new Date()) {
+            console.log("or here")
+            res.status(400).send({ msg: "Exam is already finished." });
+            return;
+        }
         const existingPage = await Page.findOne({ where: { ExamId: examId, pageNumber: pageCreate.pageNumber } })
         if (!existingPage) {
             console.log("create new page and answers")
