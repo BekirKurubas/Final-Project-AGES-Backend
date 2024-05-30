@@ -144,7 +144,19 @@ const results = [{
     }],
     numberOfCorrectAnswers: null
 }];
+
+// Define a sorting function for answers based on answerNumber
+function sortAnswersByAnswerNumber(answers) {
+    return answers.sort((a, b) => a.answerNumber - b.answerNumber);
+}
+
+
+
 export function formatResultsWithCorrectAnswers(pagesWithAnswers) {
+    const sortedPages = pagesWithAnswers.sort((a, b) => a.dataValues.pageNumber - b.dataValues.pageNumber);
+    sortedPages.forEach(page => {
+        page.answers = sortAnswersByAnswerNumber(page.answers);
+    });
     let totalCorrectAnswers = 0;
     // iterrate trough pages
     for (let i = 0; i < 5; i++) {
