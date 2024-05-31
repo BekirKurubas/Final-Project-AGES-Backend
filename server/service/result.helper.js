@@ -166,6 +166,9 @@ export function formatResultsWithCorrectAnswers(pagesWithAnswers) {
             if (i < 2 && j === 5) {
                 break;
             }
+            if (pagesWithAnswers[i] === undefined) {
+                break;
+            }
             results[i].questions[j].answer = pagesWithAnswers[i].answers[j].answer;
             if (results[i].questions[j].answer = pagesWithAnswers[i].answers[j].answer) {
                 correctAnswers += 1;
