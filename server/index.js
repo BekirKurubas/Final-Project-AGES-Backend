@@ -10,15 +10,12 @@ import { examRouter } from './router/exam.router.js';
 import { imageRouter } from './router/image.router.js';
 
 const app = express();
-const port = 10000;
+const port = 4000;
 
 app.use(morgan(process.env.ACCESS_LOG_FORMAT))
 
-const corsOptions = {
-  origin: "https://agestest.netlify.app",
 
-}
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
