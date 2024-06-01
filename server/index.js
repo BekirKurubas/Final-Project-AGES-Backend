@@ -10,7 +10,7 @@ import { examRouter } from './router/exam.router.js';
 import { imageRouter } from './router/image.router.js';
 
 const app = express();
-const port = 4000;
+const port = 10000;
 
 app.use(morgan(process.env.ACCESS_LOG_FORMAT))
 
