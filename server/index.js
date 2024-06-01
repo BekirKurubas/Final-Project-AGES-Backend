@@ -10,14 +10,15 @@ import { examRouter } from './router/exam.router.js';
 import { imageRouter } from './router/image.router.js';
 
 const app = express();
-const port = process.env.SERVER_PORT || 4000;
+const port = 4000;
 
-app.use(morgan(process.env.ACCESS_LOG_FORMAT));
+app.use(morgan(process.env.ACCESS_LOG_FORMAT))
+
 const corsOptions = {
-  origin: 'https://agestest.netlify.app/',
-  optionsSuccessStatus: 200
-};
-
+  origin: "https://agestest.netlify.app",
+  methods : ["GET", "POST", "PUT", "DELETE","OPTIONS"],
+allowedHeaders: ["Content-Type", "Authorization"]
+}
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -36,6 +37,8 @@ app.use((err, req, res, next) => {
 
 process.on('uncaughtException', err => {
   process.exit(0);
-});
+})
+
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
+
